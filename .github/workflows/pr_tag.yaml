@@ -14,7 +14,7 @@ jobs:
       
       - name: Set up Git
         run: |
-          git config --global user.name 'monzy_b'
+          git config --global user.name 'Monzy_b'
           git config --global user.email 'tomiwamonehin@gmail.com'
           git config --global credential.helper store
       
