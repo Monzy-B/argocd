@@ -5,7 +5,7 @@ on:
         
 jobs:   
  docker-build-and-push:
-    name: "Docker Build and Push"
+    name: "Docker Build and Pus task"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
