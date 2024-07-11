@@ -17,6 +17,10 @@ jobs:
           git config --global user.name 'Monzy_b'
           git config --global user.email 'tomiwamonehin@gmail.com'
           git config --global credential.helper store
+
+      - name: Determine commit hash of merged PR
+        id: get_commit_hash
+        run: echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
       
       - name: Determine new version
         id: new_version
@@ -24,10 +28,11 @@ jobs:
 
       - name: Create and push tag
         env:
-        #   PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           TAG: ${{ steps.new_version.outputs.version }}
+          COMMIT_HASH: ${{ steps.get_commit_hash.outputs.commit_hash }}
         run: |
          git config --global user.name 'Monzy_b'
          git config --global user.email 'tomiwamonehin@gmail.com'
-         git tag $TAG
-         git push https://Monzy_b:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Monzy-B/argocd.git $TAG
+         git tag $TAG $COMMIT_HASH
+         git push https://github.com/Monzy-B/argocd.git $TAG
