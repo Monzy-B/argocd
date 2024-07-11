@@ -16,6 +16,7 @@ jobs:
         run: |
           git config --global user.name 'monzy_b'
           git config --global user.email 'tomiwamonehin@gmail.com'
+          git config --global credential.helper store
       
       - name: Determine new version
         id: new_version
@@ -23,6 +24,7 @@ jobs:
 
       - name: Create and push tag
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.new_version.outputs.version }}
         run: |
           git tag $TAG
