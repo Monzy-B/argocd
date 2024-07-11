@@ -31,7 +31,7 @@ jobs:
         id: new_version
         run: echo "::set-output name=version::v1.0.0"  
 
-      - name: Create and push tag
+      - name: Create and push THE tag
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           TAG: ${{ steps.new_version.outputs.version }}
