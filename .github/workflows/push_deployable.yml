@@ -14,7 +14,7 @@ jobs:
 
       - name: Generate Git Tag
         id: generate_tag
-        if: github.ref == 'refs/head/master'
+        if: github.ref == 'refs/head/main'
         run: |
           VERSION_PREFIX="v"
           VERSION_MAJOR_MINOR="1.0"
@@ -29,7 +29,7 @@ jobs:
           echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
           
       - name: Push Git Tag
-        if: github.ref == 'refs/head/master'
+        if: github.ref == 'refs/head/main'
         run: |
           git config user.name "GitHub Actions"
           git config user.email "github-actions@users.noreply.github.com"
@@ -55,11 +55,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.BRANCH_NAME == 'master' && 'prod-k8s' || 'dev-k8s' }}:${GITHUB_SHA::5} .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.BRANCH_NAME == 'main' && 'prod-k8s' || 'dev-k8s' }}:${GITHUB_SHA::5} .
           
       - name: Push to appropriate repo
         run: |
-          if [ "${{ env.BRANCH_NAME }}" == "master" ]; then
+          if [ "${{ env.BRANCH_NAME }}" == "main" ]; then
             docker push ${{ secrets.DOCKERHUB_USERNAME }}/prod-k8s:${GITHUB_SHA::5}
           elif [ "${{ env.BRANCH_NAME }}" == "development" ]; then
             docker push ${{ secrets.DOCKERHUB_USERNAME }}/dev-k8s:${GITHUB_SHA::5}
