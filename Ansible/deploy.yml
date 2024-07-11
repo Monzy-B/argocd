@@ -1,0 +1,53 @@
+---
+- name: Install Docker and deploy Flask app
+  hosts: localhost
+  gather_facts: true
+  become: yes
+  tasks:
+    - name: Install Docker dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        state: present
+
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Pull Docker image
+      docker_image:
+        name: jephnewman/workwave:workwave-image
+        source: pull
+
+    - name: Run Docker container
+      docker_container:
+        name: workwave-app
+        image: jephnewman/workwave:workwave-image
+        ports:
+          - "5000:5000"
+        state: started
