@@ -1,0 +1,29 @@
+name: Tag PR on Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  tag:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+      
+      - name: Determine new version
+        id: new_version
+        run: echo "::set-output name=version::v1.0.0"  
+
+      - name: Create and push tag
+        env:
+          TAG: ${{ steps.new_version.outputs.version }}
+        run: |
+          git tag $TAG
+          git push origin $TAG
