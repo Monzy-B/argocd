@@ -32,6 +32,8 @@ jobs:
           TAG: ${{ steps.new_version.outputs.version }}
           COMMIT_HASH: ${{ steps.get_commit_hash.outputs.commit_hash }}
         run: |
+         git fetch origin
+         git checkout main
          git config --global user.name 'Monzy_b'
          git config --global user.email 'tomiwamonehin@gmail.com'
          git tag $TAG $COMMIT_HASH
