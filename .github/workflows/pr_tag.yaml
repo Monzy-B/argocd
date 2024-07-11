@@ -14,8 +14,8 @@ jobs:
       
       - name: Set up Git
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.name 'monzy_b'
+          git config --global user.email 'tomiwamonehin@gmail.com'
       
       - name: Determine new version
         id: new_version
@@ -27,4 +27,3 @@ jobs:
         run: |
           git tag $TAG
           git push origin $TAG
-          
