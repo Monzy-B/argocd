@@ -27,7 +27,7 @@ jobs:
         #   PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           TAG: ${{ steps.new_version.outputs.version }}
         run: |
-         git config --global user.name 'monzy_b'
+         git config --global user.name 'Monzy_b'
          git config --global user.email 'tomiwamonehin@gmail.com'
          git tag $TAG
          git push https://Monzy_b:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Monzy-B/argocd.git $TAG
