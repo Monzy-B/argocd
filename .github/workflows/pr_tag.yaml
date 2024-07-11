@@ -30,7 +30,7 @@ jobs:
         id: get_commit_hash
         run: echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
       
-      - name: Determine new version
+      - name: Determine new version and update it
         id: new_version
         run: |
           current_version=$(git describe --tags `git rev-list --tags --max-count=1`)
