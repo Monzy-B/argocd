@@ -1,5 +1,8 @@
 name: Building and testing the Docker image
 on:
+ push:
+   branches:
+    - main
  pull_request:
     types: [opened, synchronize, reopened, closed]
         
