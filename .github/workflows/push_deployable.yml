@@ -33,8 +33,8 @@ jobs:
       - name: Push Git Tag
         # if: github.ref == 'refs/heads/main' 
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "github-actions@users.noreply.github.com"
+          git config user.name "Monzy_b"
+          git config user.email "tomiwamonehin@gmail.com"
           git tag $NEW_TAG
           git push origin $NEW_TAG
 
