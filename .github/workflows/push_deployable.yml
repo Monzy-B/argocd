@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:   
   docker-build-and-push:
     name: "Docker Build and Push"
@@ -50,6 +49,8 @@ jobs:
           git config --global credential.helper store
 
       - name: Update values.yaml
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           TAG=${GITHUB_SHA::5}
           BRANCH_TAG=${TAG}
@@ -58,7 +59,7 @@ jobs:
           git config --global user.email 'tomiwamonehin@gmail.com'
           git add ./kubernetes-argocd/values.yaml
           git commit -m "Update image tag to $BRANCH_TAG"
-          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Monzy-B/argocd.git HEAD:main
+          git push https://github.com/Monzy-B/argocd.git HEAD:main
 
       - name: Install ArgoCD CLI
         run: |
