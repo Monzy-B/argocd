@@ -8,9 +8,14 @@ jobs:
   tag:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+            token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       
       - name: Set up Git
         run: |
@@ -18,21 +23,33 @@ jobs:
           git config --global user.email 'tomiwamonehin@gmail.com'
           git config --global credential.helper store
 
+      - name: Fetch all tags
+        run: git fetch --tags
+
       - name: Determine commit hash of merged PR
         id: get_commit_hash
         run: echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
       
-      - name: Determine new version
+      - name: Determine new version and update it
         id: new_version
-        run: echo "::set-output name=version::v1.0.0"  
+        run: |
+          current_version=$(git describe --tags `git rev-list --tags --max-count=1`)
+          if [ -z "$current_version" ]; then
+            new_version="v1.0.0"
+          else
+            version=$(echo $current_version | sed 's/^v//')
+            IFS='.' read -r -a parts <<< "$version"
+            parts[2]=$((parts[2]+1))
+            new_version="v${parts[0]}.${parts[1]}.${parts[2]}"
+          fi
+          echo "New version: $new_version"
+          echo "::set-output name=version::$new_version"
 
-      - name: Create and push tag
+      - name: Create and push the tag
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           TAG: ${{ steps.new_version.outputs.version }}
           COMMIT_HASH: ${{ steps.get_commit_hash.outputs.commit_hash }}
         run: |
-         git config --global user.name 'Monzy_b'
-         git config --global user.email 'tomiwamonehin@gmail.com'
-         git tag $TAG $COMMIT_HASH
-         git push https://github.com/Monzy-B/argocd.git $TAG
+          git tag $TAG $COMMIT_HASH
+          git push https://Monzy_b:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/Monzy-B/argocd.git $TAG
