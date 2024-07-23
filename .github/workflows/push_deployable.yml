@@ -51,6 +51,7 @@ jobs:
       - name: Update values.yaml
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG=${GITHUB_SHA::5}
           BRANCH_TAG=${TAG}
