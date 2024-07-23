@@ -11,6 +11,9 @@ jobs:
   docker-build-and-push:
     name: "Docker Build and Push"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
 
@@ -42,7 +45,7 @@ jobs:
       - name: Update values.yaml
         run: |
           TAG=${GITHUB_SHA::5}
-          BRANCH_TAG=$([[ $BRANCH_NAME == "main" ]] && echo "prod-${TAG}" || echo "dev-${TAG}")
+          BRANCH_TAG=${TAG}
           sed -i 's/tag: .*/tag: '"$BRANCH_TAG"'/' ./kubernetes-argocd/values.yaml
           git config --global user.name 'Monzy-B'
           git config --global user.email 'tomiwamonehin@gmail.com'
