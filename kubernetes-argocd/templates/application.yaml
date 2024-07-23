@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-argocd
+  namespace: argocd
+spec:
+  project: new
+  source:
+    repoURL: 'https://github.com/Monzy-B/argocd.git'
+    path: './kubernetes-argocd'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - ./kubernetes-argocd/values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: 'argocd'
+  syncPolicy: {}
