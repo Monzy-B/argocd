@@ -8,7 +8,7 @@ image:
   repository: tomiwadevops/dev-k8s
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 5a5ab
+  tag: 0a5cd
 
 imagePullSecrets: []
 nameOverride: ""
