@@ -58,7 +58,7 @@ jobs:
           git config --global user.name 'Monzy-B'
           git config --global user.email 'tomiwamonehin@gmail.com'
           git add ./kubernetes-argocd/values.yaml
-          git commit -m "Update image tag to $BRANCH_TAG"
+          git commit -m "Update image tag to $BRANCH_TAG [skip ci]"
           git push https://github.com/Monzy-B/argocd.git HEAD:main
 
       # - name: Install ArgoCD CLI

@@ -4,7 +4,7 @@ metadata:
   name: k8s-argocd
   namespace: acd
 spec:
-  project: new
+  project: default
   source:
     repoURL: 'https://github.com/Monzy-B/argocd.git'
     path: './kubernetes-argocd'
@@ -14,7 +14,7 @@ spec:
         - ./kubernetes-argocd/values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: 'acd'
+    namespace: alpha
   syncPolicy: 
     automated:
       prune: true
