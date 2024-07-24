@@ -61,16 +61,16 @@ jobs:
           git commit -m "Update image tag to $BRANCH_TAG"
           git push https://github.com/Monzy-B/argocd.git HEAD:main
 
-      - name: Install ArgoCD CLI
-        run: |
-          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.1.7/argocd-linux-amd64
-          chmod +x /usr/local/bin/argocd
+      # - name: Install ArgoCD CLI
+      #   run: |
+      #     curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.1.7/argocd-linux-amd64
+      #     chmod +x /usr/local/bin/argocd
 
-      - name: Trigger ArgoCD to sync
-        run: |
-          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
-          argocd app sync k8s-argocd
-        env: 
-          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
-          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
-          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+      # - name: Trigger ArgoCD to sync
+      #   run: |
+      #     argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+      #     argocd app sync k8s-argocd
+      #   env: 
+      #     ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+      #     ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+      #     ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
