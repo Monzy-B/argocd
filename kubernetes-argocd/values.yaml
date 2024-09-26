@@ -3,7 +3,7 @@ replicaCount: 2
 image:
   repository: tomiwadevops/prod-k8s
   pullPolicy: IfNotPresent
-  tag: "eebd8"
+  tag: bfe6a
 
 serviceAccount:
   # Specifies whether a service account should be created
