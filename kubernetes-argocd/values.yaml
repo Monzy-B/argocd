@@ -3,7 +3,7 @@ replicaCount: 2
 image:
   repository: prod-k8s
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: eebd8
 
 serviceAccount:
   # Specifies whether a service account should be created
