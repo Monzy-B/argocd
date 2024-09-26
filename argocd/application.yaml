@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: weather-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: weather-app
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ./kubernetes-argocd
+    repoURL: 'https://github.com/Monzy-B/argocd'
+    targetRevision: main
+    helm:
+      valueFiles:
+        - ./values.yaml
+  project: argocd-class
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 60s
+        factor: 2
+        maxDuration: 5m
+      retryStrategy: Ignore
